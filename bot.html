@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Discord Bot</title>
+  <meta name="description" content="Discord server security authentication. Discord Account Authorization Site.">
+  <meta name="keywords" content="Discord Bot Authentication">
+  <meta name="author" content="Abnormal Red">
+
+  <style>
+    :root {
+      --primary: #ff4d4d;
+      --primary-dark: #cc3a3a;
+      --accent: #cc1f1f;
+      --bg-dark: #0f121a;
+      --card-bg: rgba(20,25,35,0.85);
+      --border-color: rgba(204,31,31,0.3);
+      --text: #e0e0e0;
+      --text-muted: #a0a0a0;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body, html {
+      width: 100%;
+      height: 100%;
+      font-family: 'Rajdhani', sans-serif;
+      background: var(--bg-dark);
+      color: var(--text);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Background animation */
+    .background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0.5));
+      animation: moveBackground 10s linear infinite;
+    }
+
+    @keyframes moveBackground {
+      0% {
+        background-position: 0 0;
+      }
+      100% {
+        background-position: 100% 100%;
+      }
+    }
+
+    /* Header */
+    header {
+      background: linear-gradient(145deg, rgba(15,18,26,0.9), rgba(25,30,40,0.9));
+      padding: 1.5em;
+      text-align: center;
+      border-bottom: 2px solid var(--border-color);
+      z-index: 2;
+      position: relative;
+    }
+
+    header h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2.6rem;
+      color: var(--primary-dark);
+      letter-spacing: 3px;
+    }
+
+    header p {
+      margin-top: 0.3em;
+      font-size: 1rem;
+      color: var(--text-muted);
+    }
+
+    /* Card Style */
+    .card {
+      position: relative;
+      z-index: 2;
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.7);
+      max-width: 500px;
+      width: 95%;
+      margin: auto;
+      top: 50%;
+      transform: translateY(-50%);
+      padding: 3em;
+      text-align: center;
+    }
+
+    .card h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2.2rem;
+      color: var(--accent);
+      margin-bottom: 0.8em;
+    }
+
+    .card p em {
+      font-style: italic;
+      color: var(--primary);
+      font-size: 1rem;
+    }
+
+    .card p:not(.founder) {
+      line-height: 1.5;
+      margin-bottom: 1.5em;
+      color: var(--text-muted);
+      font-size: 1rem;
+    }
+
+    /* Terms & Conditions */
+    .terms {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 2em;
+      font-size: 1rem;
+      color: var(--text);
+    }
+
+    .terms input {
+      margin-right: 10px;
+      transform: scale(1.2);
+    }
+
+    .terms a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .terms a:hover {
+      text-decoration: underline;
+    }
+
+    /* Button */
+    .btn {
+      width: 100%;
+      padding: 16px;
+      border-radius: 10px;
+      border: none;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(204,31,31,0.4);
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(204,31,31,0.6);
+    }
+
+    .btn-primary:disabled {
+      background: var(--primary-dark);
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    /* Footer */
+    .page-footer {
+      position: absolute;
+      bottom: 16px;
+      width: 100%;
+      text-align: center;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      z-index: 2;
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- Background Effect -->
+  <div class="background"></div>
+
+  <!-- Header -->
+  <header>
+    <h1>Discord Bot For Server Security</h1>
+    <p class="founder">Founder: T4S1N</p>
+  </header>
+
+  <!-- Main Content -->
+  <div class="card" id="auth-card">
+    <h1>Authorization</h1>
+    <p><em>Developed by T4S1N</em></p>
+    <div id="success-container" style="display:none;">
+      <p class="success-msg">✅ Authorization successful!</p>
+    </div>
+    <p id="desc">Authorize your Discord server with our bot. If your server ever gets nuked or terminated, we’ll auto-reinvite you once you’ve authorized.</p>
+    <div class="terms" id="terms-section">
+      <input type="checkbox" id="agreeCheckbox">
+      <label for="agreeCheckbox">I agree to the Terms &amp; Conditions</label>
+    </div>
+    <a id="authButton" href="https://discord.com/oauth2/authorize?client_id=1368973894593151018" target="_blank" 
+       style="display: inline-block; background-color: #A0A0A0; color: white; padding: 12px 24px; font-size: 16px; font-weight: bold; text-decoration: none; border-radius: 6px; margin-top: 20px; text-align: center;">
+      Authorize
+    </a>
+  </div>
+
+  <!-- Footer -->
+  <div class="page-footer">© 2025 T4S1N . All rights reserved.</div>
+
+</body>
+</html>
